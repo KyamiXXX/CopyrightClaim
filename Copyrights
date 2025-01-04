@@ -1,0 +1,114 @@
+
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+screenGui.Name = "ValiantHub"
+
+
+local toggleButton = Instance.new("TextButton", screenGui)
+toggleButton.Size = UDim2.new(0, 100, 0, 50)
+toggleButton.Position = UDim2.new(0.9, 0, 0.1, 0)
+toggleButton.Text = "Toggle Hub"
+toggleButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.Visible = true
+
+
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 400, 0, 500)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -250)
+mainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+mainFrame.BorderSizePixel = 2
+mainFrame.Visible = false
+
+
+local titleLabel = Instance.new("TextLabel", mainFrame)
+titleLabel.Size = UDim2.new(1, 0, 0, 50)
+titleLabel.Text = "Valiant Hub"
+titleLabel.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 24
+
+
+local buttonsContainer = Instance.new("ScrollingFrame", mainFrame)
+buttonsContainer.Size = UDim2.new(1, 0, 1, -100)
+buttonsContainer.Position = UDim2.new(0, 0, 0.2, 0)
+buttonsContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Adjust dynamically
+buttonsContainer.ScrollBarThickness = 8
+buttonsContainer.BackgroundTransparency = 1
+buttonsContainer.ScrollBarImageColor3 = Color3.fromRGB(0, 120, 25) 
+
+local function createNotification(message)
+    local notification = Instance.new("TextLabel", screenGui)
+    notification.Size = UDim2.new(0, 300, 0, 50)
+    notification.Position = UDim2.new(0.5, -150, 0.8, 0)
+    notification.Text = message
+    notification.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    notification.TextColor3 = Color3.new(1, 1, 1)
+    notification.Font = Enum.Font.SourceSansBold
+    notification.TextSize = 18
+    notification.Visible = true
+
+    
+    wait(2)
+    notification:TweenPosition(UDim2.new(0.5, -150, 0.9, 0), "Out", "Quad", 0.5, true)
+    wait(0.5)
+    notification:Destroy()
+end
+
+
+local function createSection(name)
+    local sectionLabel = Instance.new("TextLabel", buttonsContainer)
+    sectionLabel.Size = UDim2.new(1, 0, 0, 40)
+    sectionLabel.Text = name
+    sectionLabel.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    sectionLabel.TextColor3 = Color3.new(1, 1, 1)
+    sectionLabel.Font = Enum.Font.SourceSansBold
+    sectionLabel.TextSize = 20
+    sectionLabel.Position = UDim2.new(0, 0, 0, buttonsContainer.CanvasSize.Y.Offset)
+
+    
+    buttonsContainer.CanvasSize = UDim2.new(0, 0, 0, buttonsContainer.CanvasSize.Y.Offset + 40)
+end
+
+
+local function createButton(name, url)
+    local button = Instance.new("TextButton", buttonsContainer)
+    button.Size = UDim2.new(0.9, 0, 0, 40)
+    button.Position = UDim2.new(0.05, 0, 0, buttonsContainer.CanvasSize.Y.Offset)
+    button.Text = name
+    button.TextSize = 18
+    button.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+    button.TextColor3 = Color3.new(0, 0, 0)
+
+    
+    buttonsContainer.CanvasSize = UDim2.new(0, 0, 0, buttonsContainer.CanvasSize.Y.Offset + 40)
+
+    button.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet(url))()
+        createNotification("Executed: " .. name)
+    end)
+end
+
+
+createSection("Main Scripts")
+createButton("LegitCamLockV1 (E)", "https://pastebin.com/raw/1PNtrb0u")
+createButton("LegitCamLockV2 (E)", "https://pastebin.com/raw/Q8wfwGG8")
+createButton("AntiLock (C)", "https://pastebin.com/raw/UiAJSbrP")
+createButton("Aimviewer (F)", "https://pastebin.com/raw/pP5PWaUF")
+createButton("Resolver (C)", "https://raw.githubusercontent.com/FeliciaXxxTop/FuckRoblox/main/ResolverV1.lua")
+createButton("TriggerbotV1 (T)", "https://pastebin.com/raw/HAmjd7F6")
+createButton("SilentAim (G)", "https://pastebin.com/raw/RLncbVPX")
+
+createSection("Rage Scripts")
+createButton("SPEED/FLY", "https://pastebin.com/raw/h5S8VLQh")
+createButton("BulletTPV1 (V)", "https://pastebin.com/raw/2gTANHNy")
+createButton("BulletTPV2 (V)", "https://pastebin.com/raw/V4ZmxCXt")
+createButton("Orbit (B)", "https://pastebin.com/raw/7R220yUA")
+
+createSection("Miscellaneous")
+createButton("Rejoin", "https://pastebin.com/raw/f6ExuCB0")
+
+toggleButton.MouseButton1Click:Connect(function()
+    mainFrame.Visible = not mainFrame.Visible
+end)
